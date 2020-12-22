@@ -10,6 +10,7 @@ class MemeGenerator extends Component {
 			allMemeImgs: [],
 		};
 		this.handleChange = this.handleChange.bind(this);
+		this.handleClick = this.handleClick.bind(this);
 	}
 
 	componentDidMount() {
@@ -26,10 +27,19 @@ class MemeGenerator extends Component {
 		this.setState({ [name]: value });
 	}
 
+	handleClick(event) {
+		event.preventDefault();
+		const memes = this.state.allMemeImgs;
+		const rand = Math.floor(Math.random() * memes.length);
+		this.setState({ randomImg: memes[rand].url });
+	}
+
 	render() {
 		return (
 			<div>
 				<form className='meme-form'>
+					{' '}
+					{/* Bob put onSubmit={this.handleSubmit} here, more semantic, but the method pmst same  */}
 					<input
 						type='text'
 						name='topText'
@@ -44,7 +54,7 @@ class MemeGenerator extends Component {
 						value={this.state.bottomText}
 						onChange={this.handleChange}
 					/>
-					<button>Generate</button>
+					<button onClick={this.handleClick}>Generate</button>
 				</form>
 				<div className='meme'>
 					<img src={this.state.randomImg} alt='random img' />
